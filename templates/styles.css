@@ -9,9 +9,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   padding: 20px;
-  padding-top: 200px;
+  padding-top: 50px;
 }
 
 .container {
