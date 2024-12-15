@@ -1,0 +1,103 @@
+/* General styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #2C233D;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  padding-top: 200px;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.logo {
+  max-width: 80px;
+  margin-bottom: 20px;
+}
+
+.title-carfinder {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Card styling */
+.form-container, .result-container {
+  background-color: #4D3A64;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+input, select {
+  width: calc(100% - 20px); /* Ensures inputs fit well inside the card */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border: 2px solid #8B6BAF;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #6B4FB5;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #8B6BAF;
+}
+
+.result-container input {
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Consistent spacing */
+label + input, label + select, input + label, select + label {
+  margin-top: 10px;
+}
+
+/* Center button */
+button {
+  margin-top: 10px;
+}
