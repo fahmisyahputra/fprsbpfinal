@@ -9,71 +9,154 @@
   <body>
     <div class="container">
       <h1 class="title-carfinder">Car Finder</h1>
-      <div class="form-container">
-        <h2>What kind of car do you want?</h2>
-        <form id="car-search-form">
-          <input
-            type="text"
-            id="car-requirements"
-            name="car-requirements"
-            placeholder="e.g. automatic car under 2000000"
-            required
-          />
-          <button type="submit">Search</button>
-        </form>
+      <h2>What kind of car do you want?</h2>
+
+      <!-- Form for Model 1 (Car.py) -->
+      <div class="form-grid">
+        <div class="form-column">
+          <div class="form-container">
+            <h3>Search using the first Model</h3>
+            <form id="car-search-form">
+              <input
+                type="text"
+                id="car-requirements"
+                name="car-requirements"
+                placeholder="e.g. automatic car under 2000000"
+                required
+              />
+              <button type="submit" id="submit-car-form">Search</button>
+            </form>
+          </div>
+          <div class="result-container" id="result-container-old"></div>
+        </div>
+
+        <!-- Form for Model 2 (new-model.py) -->
+        <div class="form-column">
+          <div class="form-container">
+            <h3>Search using the second Model</h3>
+            <form id="new-car-form">
+              <input type="text" id="new-brand" placeholder="Brand" />
+              <input type="text" id="new-model" placeholder="Model" />
+              <input type="number" id="new-price" placeholder="Maximum Price" />
+              <input
+                type="number"
+                id="new-mileage"
+                placeholder="Maximum Mileage"
+              />
+              <select id="new-fuel">
+                <option value="">Select Fuel</option>
+                <option value="Bensin">Bensin</option>
+                <option value="Diesel">Diesel</option>
+              </select>
+              <select id="new-transmission">
+                <option value="">Select Transmission</option>
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+              </select>
+              <input
+              type="number"
+              id="new-engine"
+              placeholder="Engine Capacity (e.g., 1.5)"
+              step="0.01"
+            />
+            
+              <input
+                type="number"
+                id="new-year"
+                placeholder="Year (e.g., 2015)"
+                min="1900"
+                max="2099"
+              />
+              <button type="submit" id="submit-new-car-form">Search</button>
+            </form>
+          </div>
+          <div class="result-container" id="result-container-new"></div>
+        </div>
       </div>
-      <div class="result-container" id="result-container"></div>
     </div>
+
     <script>
+      // Event listener for Car.py form
       document
         .getElementById("car-search-form")
         .addEventListener("submit", function (event) {
           event.preventDefault();
           const userInput = document.getElementById("car-requirements").value;
 
-          // Call API with user input
           fetch("http://127.0.0.1:5000/api/get-cars", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query: userInput }),
           })
             .then((response) => response.json())
             .then((data) => {
-              // Clear previous results
               const resultContainer =
-                document.getElementById("result-container");
+                document.getElementById("result-container-old");
               resultContainer.innerHTML = "";
-
-              // Display the cars
               if (data.cars && data.cars.length > 0) {
-                const carList = document.createElement("div");
-                carList.classList.add("car-list");
                 data.cars.forEach((car) => {
-                  const carDiv = document.createElement("div");
-                  carDiv.classList.add("car-item");
-                  carDiv.innerHTML = `
-                          <strong>${car.model}</strong><br>
-                          Tahun: ${car.tahun}<br>
-                          Harga: ${car.harga}<br>
-                          Transmisi: ${car.transmisi}<br>
-                          Jarak Tempuh: ${car.jarak_tempuh}<br>
-                          Bahan Bakar: ${car.bahan_bakar}<br>
-                          Pajak: ${car.pajak}<br>
-                          MPG: ${car.mpg}<br>
-                          Ukuran Mesin: ${car.ukuran_mesin}<br><br>
-                      `;
-                  carList.appendChild(carDiv);
+                  resultContainer.innerHTML += `
+                    <div class="car-item">
+                      <strong>${car.model}</strong><br>
+                      Tahun: ${car.tahun}<br>
+                      Harga: ${car.harga}<br>
+                      Transmisi: ${car.transmisi}<br>
+                      Jarak Tempuh: ${car.jarak_tempuh} km<br>
+                      Bahan Bakar: ${car.bahan_bakar}<br>
+                      Pajak: ${car.pajak}<br>
+                      MPG: ${car.mpg}<br>
+                      Ukuran Mesin: ${car.ukuran_mesin} L<br>
+                    </div>`;
                 });
-                resultContainer.appendChild(carList);
               } else {
-                resultContainer.innerHTML =
-                  "No cars found matching your criteria.";
+                resultContainer.innerHTML = "No cars found matching your criteria.";
               }
-            })
-            .catch((error) => {
-              console.error("Error fetching cars:", error);
+            });
+        });
+
+      // Event listener for new-model.py form
+      document
+        .getElementById("new-car-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = {
+            brand: document.getElementById("new-brand").value,
+            model: document.getElementById("new-model").value,
+            price: parseFloat(document.getElementById("new-price").value),
+            mileage: parseFloat(document.getElementById("new-mileage").value),
+            fuel: document.getElementById("new-fuel").value,
+            transmission: document.getElementById("new-transmission").value,
+            engine: parseFloat(document.getElementById("new-engine").value),
+            year: parseInt(document.getElementById("new-year").value),
+          };
+
+          fetch("http://127.0.0.1:5000/api/get-new-cars", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              const resultContainer =
+                document.getElementById("result-container-new");
+              resultContainer.innerHTML = "";
+              if (data.cars && data.cars.length > 0) {
+                data.cars.forEach((car) => {
+                  resultContainer.innerHTML += `
+                    <div class="car-item">
+                      <strong>${car.Merek} ${car.Model}</strong><br>
+                      Tahun: ${car.Tahun}<br>
+                      Harga: ${car.harga}<br>
+                      Mileage: ${car["Jarak tempuh"]} km<br>
+                      Fuel: ${car["Tipe bahan bakar"]}<br>
+                      Transmission: ${car.Transmisi}<br>
+                      Engine: ${car["Kapasitas mesin"]} L<br>
+                    </div>`;
+                });
+              } else {
+                resultContainer.innerHTML = "No cars found matching your criteria.";
+              }
             });
         });
     </script>

@@ -16,7 +16,7 @@ body {
 .container {
   text-align: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 1200px; /* Adjusted to fit grid width */
 }
 
 h1 {
@@ -25,25 +25,29 @@ h1 {
   color: #ffffff;
 }
 
-.logo {
-  max-width: 80px;
-  margin-bottom: 20px;
-}
-
 .title-carfinder {
-    padding-top: 50px;
-    padding-bottom: 20px;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 
-/* Card styling */
-.form-container, .result-container {
+/* Card styling for forms and results */
+.form-container {
   background-color: #4D3A64;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+.result-container {
+  background-color: #4D3A64;
+  padding: 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Label styling */
 label {
   display: block;
   text-align: left;
@@ -51,6 +55,7 @@ label {
   font-size: 0.9rem;
 }
 
+/* Input and Select styling */
 input, select {
   width: calc(100% - 20px); /* Ensures inputs fit well inside the card */
   padding: 10px;
@@ -66,6 +71,7 @@ input:focus, select:focus {
   border: 2px solid #8B6BAF;
 }
 
+/* Button styling */
 button {
   width: 100%;
   padding: 10px;
@@ -83,6 +89,7 @@ button:hover {
   background-color: #8B6BAF;
 }
 
+/* Result container input styling */
 .result-container input {
   background-color: #ffffff;
   color: #000000;
@@ -92,11 +99,65 @@ button:hover {
 }
 
 /* Consistent spacing */
-label + input, label + select, input + label, select + label {
+label + input, label + select {
+  margin-top: 10px;
+}
+
+input + label, select + label {
   margin-top: 10px;
 }
 
 /* Center button */
 button {
   margin-top: 10px;
+}
+
+/* Two-column form layout */
+.form-grid {
+  display: flex;
+  justify-content: center; /* Centers the grid */
+  gap: 30px; /* Adds space between the two columns */
+  margin: 0 auto;
+}
+
+.form-column {
+  flex: 1; /* Make each column take equal width */
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-column label,
+.form-column input,
+.form-column select {
+  margin-bottom: 15px;
+}
+
+/* Result containers for both forms */
+#result-container-old, #result-container-new {
+  background-color: #3C2A52;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  overflow: auto;
+  max-height: 300px;
+}
+
+#result-container-old .car-item,
+#result-container-new .car-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #6B4FB5;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+/* Styling for larger buttons */
+#submit-car-form, #submit-new-car-form {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 1.1rem;
 }
